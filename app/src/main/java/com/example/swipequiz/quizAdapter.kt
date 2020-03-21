@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_quiz.view.*
 
 class quizAdapter(private val reminders: List<Quiz>) : RecyclerView.Adapter<quizAdapter.ViewHolder>() {
@@ -36,6 +38,13 @@ class quizAdapter(private val reminders: List<Quiz>) : RecyclerView.Adapter<quiz
 
         fun bind(quiz: Quiz) {
             itemView.tvItem.text = quiz.question
+            itemView.setOnClickListener {
+                Snackbar.make(itemView.rootView.findViewById(R.id.tvItem),
+                    "The correct answer is: " + quiz.answer,
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
+            }
         }
     }
 

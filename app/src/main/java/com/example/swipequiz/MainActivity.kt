@@ -2,6 +2,8 @@ package com.example.swipequiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             questions.add(Quiz(Quiz.QUIZ_QUESTIONS[i], Quiz.QUIZ_ANSWER[i]))
         }
         QuizAdapter.notifyDataSetChanged()
+
     }
 
     private fun createItemTouchHelper(): ItemTouchHelper {
@@ -49,15 +52,13 @@ class MainActivity : AppCompatActivity() {
             ): Boolean {
                 return false
             }
-
             // Callback triggered when a user swiped an item.
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 var answer = questions.get(position).answer
                 QuizAdapter.notifyDataSetChanged()
                 if (direction == ItemTouchHelper.RIGHT && answer == true || direction == ItemTouchHelper.LEFT && answer == false) {
-                    Snackbar.make(rvQuestion, getString(R.string.correct) , Snackbar.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@MainActivity, R.string.correct, Toast.LENGTH_SHORT).show()
                     questions.removeAt(position)
                 }else{Snackbar.make(rvQuestion, getString(R.string.incorrect), Snackbar.LENGTH_SHORT)
                     .show()}
